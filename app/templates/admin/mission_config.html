@@ -1,0 +1,73 @@
+{% set active_page = "admin" %}
+{% set title = "Mission Config" %}
+{% include "header.html" %}
+{% include "navbar.html" %}
+  <style>
+  .entry {
+    line-height:105%;
+    font-size:80%;
+    overflow-wrap: break-word;
+  }
+  </style>
+  <div class="container">
+    <div style="margin-bottom:100px"></div>
+    <!-- Jumbotron -->
+    <div class="jumbotron">
+      <div id="bodyContent" name="bodyContent">
+        {% include "flash.html" %}
+        <div class="row"><h1>Mission Configuration</h1></div>
+        {%if IS_OPS %}
+        <div class="row">
+          <div class="col-xs-6">
+            <form method="POST" action="{{url_for('admin.reload_config', file='missions')}}">
+              <input type="hidden" name="csrf_token" value="{{CSRF_TOKEN}}"/>
+              <input type="submit" value="Reload File" class="btn btn-block btn-danger"/>
+            </form>
+          </div>
+          <div class="col-xs-6">
+            <form method="GET" action="{{url_for('admin.read_raw_config', file='missions')}}">
+              <input type="submit" value="Modify File" class="btn btn-block btn-danger"/>
+            </form>
+          </div>
+        </div>
+        {%endif%}
+        <hr />
+        <div class="col-xs-12"><h3>Categories:</h3></div>
+        <div class="row">
+          <div class="col-xs-2">&nbsp;</div>
+          <div class="col-xs-10">
+            {% for c in categories.keys() %}<div class="col-xs-12 col-sm-6 col-md-4"><a href="#{{c}}">{{ c }}</a></div>{%endfor%}
+          </div>
+        </div>
+
+        {% for c in categories.keys() %}
+        <a name="{{c}}"></a>
+        <div class="row"><div class="col-xs-12"><h3>{{c}}</h3></div></div>
+        <div class="row">
+          {% for m in missions.get_missions(c) %}
+          <div class="col-xs-12"><h4>{{m['name']}}</h4></div>
+          
+          {% for entry in m %}
+          {%if entry != 'flag' or IS_OPS %}
+          <div class="row entry">
+            <div class="col-xs-1">&nbsp;</div>
+            <div class="col-xs-2">{{entry}}</div>
+            <div class="col-xs-9">{{m[entry]}}</div>
+          </div>
+          {%endif%}
+          {%endfor%}
+
+          {%endfor%}
+        </div>
+
+
+        {% endfor %}
+
+
+        
+        <p>Copyright &copy; 2017. All content including challenges, images, and descriptions are owned by Netcat.us</p>
+      </div>
+    </div>
+  </div> <!-- /container -->
+  
+{% include "footer.html" %}

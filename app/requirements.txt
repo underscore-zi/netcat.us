@@ -1,0 +1,7 @@
+Flask
+requests-oauthlib
+Flask-Pymongo
+ConfigParser
+flask_limiter
+requests
+uwsgi

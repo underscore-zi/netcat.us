@@ -1,0 +1,125 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex">
+  <title>Drone Control Panel</title>
+  <script type='text/javascript' src='/static/mainjquery.js'></script>
+  <script type="text/javascript" src="/static/mainbsmin.js"></script>
+  <!--<link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> -->
+  <link rel="stylesheet" type="text/css" href="/static/theme.css">
+      <link rel="stylesheet" type="text/css" href="/static/mainbscss.css">
+      <script type='text/javascript' src="/static/mainbstable.js"></script>
+
+  <style type='text/css'>
+    .row-index {
+  width: 150px;
+  display: inline-block;
+}
+img.resize{
+   width:20px;
+   height:20px;
+}
+  </style>
+
+
+<script type='text/javascript'>
+function disableButtonState(elem) {
+    if(confirm('Are you sure you want to disable this button?') == true) {
+        elem.disabled = true;
+        alert("its done.");            
+    }
+    else { 
+        return false;
+    }          
+}
+</script>
+
+<script type='text/javascript'>
+$('#table').bootstrapTable({
+   "lengthMenu": [ [5, 10, 25, 50, -1], [5, 10, 25, 50, "All"] ]
+});
+</script>
+
+<script type='text/javascript'>//<![CDATA[
+$(document).ready(function () {
+
+    (function ($) {
+
+        $('#filter').keyup(function () {
+
+            var rex = new RegExp($(this).val(), 'i');
+            $('.searchable tr').hide();
+            $('.searchable tr').filter(function () {
+                return rex.test($(this).text());
+            }).show();
+
+        })
+
+    }(jQuery));
+
+});
+</script>
+
+<div>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+            {% if category == 'message' %}
+              <div class="alert alert-warning" role="alert">
+            {% else %}
+              <div class="alert alert-{{ category }}" role="alert">
+            {% endif %}
+              {{ message }}
+            </div>
+        {% endfor %}
+      {% endif %}
+  {% endwith %}
+</div>
+<div class="container" style="padding: 10px; ">
+  <br>
+
+
+</head>
+<body>
+
+
+    <title>Netcat.us</title>
+    <link rel="shortcut icon" href="/static/TemplateData/favicon.ico">
+    <link rel="stylesheet" href="/static/TemplateData/style.css">
+    <script src="/static/TemplateData/UnityProgress.js"></script>  
+    <script src="/static/Build/UnityLoader.js"></script>
+    <script>
+      var gameInstance = UnityLoader.instantiate("gameContainer", "/static/Build/watchdogs3.json", {onProgress: UnityProgress});
+    </script>
+  </head>
+  <body>
+    <div class="webgl-content">
+      <div id="gameContainer" style="width: 960px; height: 600px"></div>
+      <div class="footer">
+
+        <div class="fullscreen" onclick="gameInstance.SetFullscreen(1)"></div>
+        <div class="title">Netcat.us</div>
+      </div>
+    </div>
+  </body>
+
+  
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-108203375-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-108203375-1');
+</script>
+</html>
+
+
+
+
+

@@ -1,0 +1,24 @@
+.panel-bg-danger
+{
+	background-color: #ab0000;
+	color: #FFF;
+	text-align: center;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	line-height: 1.5;
+}
+
+.panel-bg-success
+{
+	background-color: #209e00;
+	color: #FFF;
+	text-align: center;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	line-height: 1.5;
+}
+
+/* Hack for modals */
+.modal-body p {
+    word-wrap: break-word;
+}

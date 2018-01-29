@@ -1,0 +1,56 @@
+{% set active_page = "admin" %}
+{% set title = "Ranks Config" %}
+{% include "header.html" %}
+{% include "navbar.html" %}
+  <style>
+  .entry {
+    line-height:105%;
+    font-size:80%;
+    overflow-wrap: break-word;
+  }
+  </style>
+  <div class="container">
+    <div style="margin-bottom:100px"></div>
+    <!-- Jumbotron -->
+    <div class="jumbotron">
+      <div id="bodyContent" name="bodyContent">
+        {% include "flash.html" %}
+        <div class="row"><h1>Rank Configuration</h1></div>
+        {%if IS_OPS %}
+        <div class="row">
+          <div class="col-xs-6">
+            <form method="POST" action="{{url_for('admin.reload_config', file='ranks')}}">
+              <input type="hidden" name="csrf_token" value="{{CSRF_TOKEN}}"/>
+              <input type="submit" value="Reload File" class="btn btn-block btn-danger"/>
+            </form>
+          </div>
+          <div class="col-xs-6">
+            <form method="GET" action="{{url_for('admin.read_raw_config', file='ranks')}}">
+              <input type="submit" value="Modify File" class="btn btn-block btn-danger"/>
+            </form>
+          </div>
+        </div>
+        {%endif%}
+        <hr />
+        {% for r in ranks %}
+        <div class="row">
+          <div class="col-xs-12"><h3>{{r|title}}</h3></div>
+          <div class="entry">
+            {%for entry in ranks[r]%}
+            <div class="col-xs-1">&nbsp;</div>
+            <div class="col-xs-2">{{entry}}</div>
+            <div class="col-xs-9">{{ranks[r][entry]}}</div>
+            {%endfor%}
+          </div>
+
+        </div>
+        {% endfor %}
+
+
+        
+        <p>Copyright &copy; 2017. All content including challenges, images, and descriptions are owned by Netcat.us</p>
+      </div>
+    </div>
+  </div> <!-- /container -->
+  
+{% include "footer.html" %}

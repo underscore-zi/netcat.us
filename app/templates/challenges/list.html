@@ -1,0 +1,140 @@
+{% set active_page = "challenges" %}
+{% set title = active_category + " Challenges" %}
+{% include "header.html" %}
+{% include "navbar.html" %}
+<style>
+.mission-modal .challenge-info {
+  font-size:80%;
+  padding:0px;
+  margin:0px;
+  line-height:100%;
+}
+.mission-modal .modal-footer .challenge-info a {
+  font-size:60%;
+  padding:0px;
+  margin-top:10px;
+}
+.mission-modal input[type=text] {
+  margin-bottom:5px;
+}
+.mission-modal .alert {
+  text-align:left;
+}
+.mission-modal {
+  overflow-wrap: break-word;
+  line-height:110%
+}
+</style>
+  <div class="container">
+
+    <div style="margin-bottom:100px"></div>
+
+    <!-- Jumbotron -->
+    <div class="jumbotron">
+      <div id="bodyContent" name="bodyContent">
+        <h1>Challenges</h1>
+        <hr />
+
+        {%if missionName == None%}{% include "flash.html" %}{%endif%}
+
+        <!-- The password for Basic1 is 123456 -->
+        {%if userinfo != None %}<h3>Your points: {{ userinfo['exp'] }} [{{ userinfo['rank'] }}]</h3>{%endif%}
+
+        <div class="row">
+        	<div class="col-md-3">
+        		<div class="panel panel-default" style="line-height: 1.0;">
+              <ul class="nav nav-pills nav-stacked">
+                {% for cat in categories %}
+                  {%if cat == active_category%}<li class="active">{%else%}<li>{%endif%}
+                  <a href="{{url_for('challenges.view_category', category=cat)}}">{{cat | title | replace('_', ' ')}}</a>
+                {%endfor%}
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-md-9">
+            <div class="row">
+              {% for mission in missionDetails %}
+                <a href="#"  data-toggle="modal" data-target="#modal{{ mission['name'] }}">
+                  <div class="col-md-3">
+                    <div class="panel {%if mission['solved'] == True%}panel-success panel-bg-success{%else%}panel-danger panel-bg-danger{%endif%}">
+                      <strong>{{ mission['title'] }}</strong>
+                      <br />
+                      ({{ mission['exp'] }} points)
+                    </div>
+                  </div>
+                </a>
+                <!-- class="modal fade" -->
+                <div class="modal fade mission-modal" id="modal{{ mission['name'] }}" tabindex="-1" role="dialog" aria-labelledby="modal{{ mission['name'] }}">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">{{ mission['title'] }} [SOLVES: {{ mission['solves'] }}]</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="container">
+                          {%if missionName == mission['name']%}{% include "flash.html" %}{%endif%}
+                          <div class="row">
+                            <div class="col-xs-12">{{ mission['description'] }}</div>
+                          </div>
+                          <hr />
+                          <div class="row challenge-info">
+                            <div class="col-xs-12 col-sm-2">Points:</div>
+                            <div class="col-xs-2 hidden-sm hidden-md hidden-lg hidden-xl">&nbsp;</div><div class="col-xs-10 col-sm-10">{{ mission['exp'] }}</div>
+                          </div>
+                          {% if not mission['link']  == "None" %}
+                          <div class="row challenge-info">
+                            <div class="col-xs-12 col-sm-2">Link:</div>
+                            <div class="col-xs-2 hidden-sm hidden-md hidden-lg hidden-xl">&nbsp;</div><div class="col-xs-10 col-sm-10"><a href="{{ mission['link'] }}">{{ mission['link'] }}</a></div>
+                          </div>
+                          {% endif %}
+                          {% if mission['type'] != 'steganography' and mission.get('ports', 0) != 0 %}
+                          <div class="row challenge-info">
+                            <div class="col-xs-12 col-sm-2">Server:</div>
+                            <div class="col-xs-2 hidden-sm hidden-md hidden-lg hidden-xl">&nbsp;</div><div class="col-xs-10 col-sm-10">netcat.us:{{mission['ports'].split(':')[1]}}</div>
+                          </div>
+                          {% endif %}
+                        </div>
+                      </div>
+                      <div class="modal-footer container">
+                        {%if userinfo==None%}
+                        <div class="alert alert-danger alert-block">
+                          You must be logged in to submit a flag.
+                        </div>
+                        {%elif mission['solved'] == True%}
+                        <div class="alert alert-danger alert-block">
+                          You have already solved this challenge.
+                        </div>
+                        {%else%}
+                        <form action="{{url_for('challenges.submit', category=active_category, name=mission['name']) }}" method="post" role="form">
+                          <input type="text" class="form-control" id="flag" name="flag" placeholder="Enter Password" {%if userinfo==None%}disabled{%endif%}>
+                          <button type="submit" class="btn btn-block btn-success" {%if userinfo==None%}disabled{%endif%}>Submit Flag</button>
+                        </form>
+                        {%endif%}
+                        <div class="challenge-info"><a href="{{url_for('challenges.view_category', category=active_category, name=mission['name'])}}">Direct link to challenge</a></div>
+                      </div>
+                    </div>
+                  </div>
+                </div><!-- ./modal -->
+              {% endfor %}
+
+            </div><!-- ./row -->
+          </div><!-- ./col-9-md -->
+        </div><!-- ./row -->
+
+        <hr />
+        <p>Copyright &copy; 2017. All content including challenges, images, and descriptions are owned by Netcat.us</p>
+        
+      </div><!-- ./body-content -->
+    </div> <!-- /jumbotron -->
+  </div><!-- ./container -->
+
+{% if missionName %}
+<script type="text/javascript">
+  window.onload = function() {
+        $('#modal{{missionName}}').modal('show');
+  };
+</script> 
+{%endif%}
+{% include "footer.html" %}

@@ -1,0 +1,26 @@
+{% set title = "Drone Login" %}
+{% include "header.html" %}
+<br /><br />
+<form action="/drone/dronelogin" method="POST">
+<div class="jumbotron">
+	<div class="app-title">
+		<h1>Login</h1>
+	</div>
+	{% include "flash.html" %}
+	<h2>Hello {{passdrone}}</h2>
+
+    <div id="bodyContent container" name="bodyContent">
+		<div class="row">
+			<div class="col-xs-12 col-md-3">Username</div>
+			<div class="col-xs-12 col-md-9"><input type="text" class="login-field" value="" placeholder="username" name="username"></div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-md-3">Password</div>
+			<div class="col-xs-12 col-md-9"><input type="password" class="login-field" value="" placeholder="password" name="password"></div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12"><input type="submit" value="Log in" class="btn btn-primary btn-large btn-block" ></div>
+		</div>
+	</div>
+</div>
+</form>

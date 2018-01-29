@@ -1,0 +1,56 @@
+{% set active_page = "admin" %}
+{% set title = "Containers" %}
+{% include "header.html" %}
+{% include "navbar.html" %}
+
+  <style>
+    .mission-name { 
+      font-weight: bold;
+    }
+    .mission-entry {
+      font-size:80%;
+    }
+    .flashed .alert {
+      white-space: pre-wrap;
+    }
+  </style>
+  <div class="container">
+    <div style="margin-bottom:100px"></div>
+    <!-- Jumbotron -->
+    <div class="jumbotron">
+      <div id="bodyContent" name="bodyContent">
+        <h1> Containers </h1>
+        <hr />
+        <div class='flashed'>{% include "flash.html" %}</div>
+        {% for c in containers %}
+        {% if 'docker' in containers[c] %}
+        <div class="row alert {% if containers[c]['state'] > 0 %}alert-success {% else %} alert-danger {% endif %}">
+          <div class="col-xs-4 mission-name">{{ containers[c]['name'] }}</div>
+          <div class="col-xs-8 text-right">
+
+            <form method="POST" action={{url_for('admin.container_action',name=containers[c]['name'])}}>
+            <input type="hidden" name="name" value="{{ containers[c]['name'] }}">
+            <input type="hidden" name="csrf_token" value="{{ CSRF_TOKEN }}">
+            {% if containers[c]['state'] > 0 %}
+              {% if IS_OPS %}
+              <input type="submit" name="action" value="Stop" class="btn btn-lg btn-success" />
+              <input type="submit" name="action" value="Rebuild" class="btn btn-lg btn-success" />
+              {%else%}
+              <span class='status-text'>Container is running</span>
+              {% endif %}
+            {% else %}
+            <input type="submit" name="action" value="Start" class="btn btn-lg btn-danger" />
+            {% if IS_OPS %}<input type="submit" name="action" value="Rebuild" class="btn btn-lg btn-danger" />{% endif %}
+            {% endif %}
+            
+            </form>
+          </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+        <p>Copyright &copy; 2017. All content including challenges, images, and descriptions are owned by Netcat.us</p>
+      </div>
+    </div>
+  </div> <!-- /container -->
+  
+{% include "footer.html" %}

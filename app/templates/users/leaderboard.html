@@ -1,0 +1,60 @@
+{% set active_page = "leaderboard" %}
+{% include "header.html" %}
+{% include "navbar.html" %}
+
+  <div class="container">
+
+    <div style="margin-bottom:100px"></div>
+
+    <!-- Jumbotron -->
+    <div class="jumbotron">
+      <div id="bodyContent" name="bodyContent">
+        <h1>Leaderboards</h1>
+        <hr />
+        {% if userinfo != None %}
+        <h3>Your points: {{ userinfo['exp'] }} [{{ userinfo['rank'] }}]</h3>
+        {%endif%}
+
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Placement</th>
+              <th>Name</th>
+              <th>Rank</th>
+              <th>Points</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for lead in leads %}
+              <tr>
+                <td>{{loop.index}}</td>
+                <td><a href="{{url_for('users.profile', name=lead['name'])}}">{{ lead['name'] }}</a></td>
+                <td>
+                  {% if lead['rank'] == "*** General" %}
+                    <img src="http://netcat.us/static/images/3.jpg" width="32px" height="32px" />
+                    {{ lead['rank'] }}
+
+                  {% elif lead['rank'] == "** General" %}
+                    <img src="http://netcat.us/static/images/3.jpg" width="32px" height="32px" />
+                    {{ lead['rank'] }}
+
+                  {% else %}
+                    <img src="http://netcat.us/static/images/{{ lead['rank'].lower() }}.jpg" width="32px" height="32px" />
+                    {{ lead['rank'] }}
+                  {% endif %}
+                </td>
+                <td>{{ lead['exp'] }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        
+        <hr />
+        <p>Copyright &copy; 2017. All content including challenges, images, and descriptions are owned by Netcat.us</p>
+      </div>
+    </div>
+
+  </div> <!-- /container -->
+  <!-- /container -->
+
+{% include "footer.html" %}

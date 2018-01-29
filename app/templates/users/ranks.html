@@ -1,0 +1,46 @@
+{% set active_page = "ranks" %}
+{% include "header.html" %}
+{% include "navbar.html" %}
+  <div class="container">
+
+    <div style="margin-bottom:100px"></div>
+
+    <!-- Jumbotron -->
+    <div class="jumbotron">
+      <div id="bodyContent" name="bodyContent">
+        <h1>Ranks</h1>
+        <hr />
+        {%if userinfo != None%}
+        <h3>Your points: {{ userinfo['exp'] }} [{{ userinfo['rank'] }}]</h3>
+        {%endif%}
+
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Points</th>
+              <th># of players</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for rank in rank_order %}
+            <tr class="">
+              <td class="{{rank}}">
+                <img src="/static/images/{{ranks[rank]['image']}}" width="32px" height="32px" />
+                {{rank|title}}
+              </td>
+              <td>{{ranks[rank]['points']}} points</td>
+              <td>{{ranks[rank]['count']}} players</td>
+            </tr>
+            {%endfor%}
+          </tbody>
+        </table>
+        
+        <hr />
+        <p>Copyright &copy; 2017. All content including challenges, images, and descriptions are owned by Netcat.us</p>
+      </div>
+    </div>
+
+  </div> <!-- /container -->
+
+{% include "footer.html" %}

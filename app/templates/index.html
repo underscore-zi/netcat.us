@@ -1,0 +1,38 @@
+{% set active_page = "home" %}
+{% include "header.html" %}
+{% include "navbar.html" %}
+
+  <div class="container">
+    <div style="margin-bottom:100px"></div>
+    <div class="jumbotron">
+      <div id="bodyContent" name="bodyContent">
+        {% include "flash.html" %}
+        {% if userinfo != None %}
+        <h1>Welcome {{ userinfo['name'] }}</h1>
+        <hr />
+
+        <h3>Your points: {{ userinfo['exp'] }} [{{ userinfo['rank'] }}]</h3>
+        {%else%}
+        <h1>Welcome</h1>
+        <hr />
+        {%endif%}
+        <br />
+        <p>
+          Welcome to Netcat.us! Here you will find resources for learning, practicing, and exploring exploitation and infosec. We have also integrated Discord into our Capture The Flag challenge, and points you earn by completing challenges will allow you to progress in the ranks on our Discord server where you can also find help from our experienced staff or converse with other players.
+        </p>
+        <p>
+          We also have scouts for security-related companies lurking in the Discord that are eager to meet those who prove their worth in our CTF. What are you waiting for?
+        </p>
+        <p>
+          <a href="/challenges/basic"><button type="button" class="btn btn-success btn-lg">See Challenges</button></a>
+          <a href="https://discord.gg/w37zgnR"><button type="button" class="btn btn-info btn-lg">Join Discord</button></a>
+        </p>
+
+        <hr />
+        <p>Copyright &copy; 2017. All content including challenges, images, and descriptions are owned by Netcat.us</p>
+      </div>
+    </div>
+
+  </div>
+  
+{% include "footer.html" %}

@@ -1,0 +1,9 @@
+{
+"TOTAL_MEMORY": 268435456,
+"dataUrl": "watchdogs3.data.unityweb",
+"asmCodeUrl": "watchdogs3.asm.code.unityweb",
+"asmMemoryUrl": "watchdogs3.asm.memory.unityweb",
+"asmFrameworkUrl": "watchdogs3.asm.framework.unityweb",
+"splashScreenStyle": "Dark",
+"backgroundColor": "#222C36"
+}
