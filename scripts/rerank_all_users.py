@@ -188,6 +188,8 @@ with app.app.app_context():
             print "{} - {}({}) - {}({})".format(userinfo['name'].encode('punycode'), userinfo['rank'], userinfo['exp'], new_rank['name'], points)
             #Update the database
             app.mongo.db.users.update_one({"_id" : userinfo['_id'] }, {'$set' : {"exp":points, "rank":new_rank['name']}})
+
+
         #Update Discord if the user is in discord
         if userinfo['id'] in members:
             passed = False
@@ -209,7 +211,7 @@ with app.app.app_context():
 
 
             #Check if we needs to update thier ranks of not
-            if len(set_ranks) == len(members[userinfo['id']]['roles']):
+            if len(set_ranks) != len(members[userinfo['id']]['roles']):
                 #Generate the JSON
                 patch_data = ''
                 for r in set_ranks:
