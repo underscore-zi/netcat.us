@@ -58,7 +58,7 @@ def view_containers():
 
 '''Returns the number of running docker instances with the given tag'''
 def check_state(tag):
-    tag = re.sub('[^0-9a-zA-Z]+', '', tag)
+    tag = re.sub('[^0-9a-zA-Z_\-]+', '', tag)
     cmd = "docker ps -q --filter status=running --filter ancestor=%s | wc -l" % (tag)
     try:
         output = subprocess.check_output(cmd, shell=True)
@@ -83,7 +83,7 @@ def container_action(name):
         flash('Error: No container was found for the "{}" mission.'.format(name))
         return redirect(url_for('admin.view_containers'))
 
-    tag = re.sub('[^0-9a-zA-Z]+', '', mission['name'])
+    tag = re.sub('[^0-9a-zA-Z_\-]+', '', mission['name'])
     start_cmd = ''
     if 'ports' in mission and ':' in mission['ports']:
         ports = mission['ports'].split(':')
