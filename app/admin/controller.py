@@ -138,6 +138,10 @@ def reload_config(file):
         from app.config import missions
         reload(missions)
         flash("Success: Missions config has been reloaded")
+    elif file == 'ranks':
+        from app.config import ranks
+        reload(ranks)
+        flash("Success: Ranks config has been reloaded")
     else:
         flash('Unknow config file: {}'.format(file))
         return redirect(url_for('admin.view_containers'))
