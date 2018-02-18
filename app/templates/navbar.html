@@ -15,7 +15,7 @@
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
           <li class="{% if active_page == 'home' %}active{%endif%}"><a href="/">Welcome</a></li>
-          <li class="{% if active_page == 'challenges' %}active{%endif%}"><a href="{{url_for('challenges.view_category', category='basic')}}">Challenges</a></li>
+          <li class="{% if active_page == 'challenges' %}active{%endif%}"><a href="{{url_for('challenges.view_category', category='web')}}">Challenges</a></li>
           <li class="{% if active_page == 'ranks' %}active{%endif%}"><a href="{{url_for('users.ranks')}}">Ranks</a></li>
           <li class="{% if active_page == 'leaderboard' %}active{%endif%}"><a href="{{url_for('users.leaderboard')}}">Leaderboards</a></li>
           <li class="{% if active_page == 'learn' %}active{%endif%}"><a href="/learn">Learn</a></li>

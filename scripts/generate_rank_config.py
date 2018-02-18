@@ -9,7 +9,7 @@ sys.path.insert(0, BASE_DIR)
 # is caluclates by taking MAX points and subtracting adv_min 
 # missing_adv times. Meaing *** is ~MAX - missing_adv adv missions
 
-noob_max = 51 # Max point value for noob challenges
+noob_max = 50 # Max point value for noob challenges
 adv_min = 300 # Min points for advanced challenges
 missing_adv = 3
 

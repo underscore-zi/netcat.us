@@ -16,7 +16,7 @@ def view_category(category, name=None):
     tmp_ms = MISSIONS.get_missions(category)
     if not tmp_ms: 
         flash('Error: Unknown category ({})'.format(category))
-        return redirect(url_for('challenges.view_category', category='basic'))
+        return redirect(url_for('challenges.view_category', category='web'))
 
     ms = []
     for m in tmp_ms:
