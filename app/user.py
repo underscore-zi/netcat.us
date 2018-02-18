@@ -43,7 +43,7 @@ def _refresh_points(userinfo, force_update=False):
     points = calculate_points(userinfo)
     new_rank = ranks.lookup_rank(points)
     if new_rank != None and (force_update or userinfo['rank'] != new_rank['name']):
-        discord.update_rankcat(userinfo['id'],new_rank['name'])
+        discord.update_rank(userinfo['id'],new_rank['name'])
     if new_rank == None: new_rank = ''
     else: new_rank = new_rank['name']
     app.mongo.db.users.update_one({"_id" : userinfo['_id'] }, {'$set' : {'exp':points, 'rank':new_rank}})
