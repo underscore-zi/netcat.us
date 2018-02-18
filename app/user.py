@@ -40,14 +40,18 @@ def complete_challenge(name):
     changed'''
 def _refresh_points(userinfo, force_update=False):
     import app.config.ranks as ranks
+    points = calculate_points(userinfo)
+    new_rank = ranks.lookup_rank(points)
+    if new_rank != None and (force_update or userinfo['rank'] != new_rank['name']):
+        discord.update_rankcat(userinfo['id'],new_rank['name'])
+    if new_rank == None: new_rank = ''
+    else: new_rank = new_rank['name']
+    app.mongo.db.users.update_one({"_id" : userinfo['_id'] }, {'$set' : {'exp':points, 'rank':new_rank}})
+
+def calculate_points(userinfo):
     points = 0
     for key in userinfo:
         m = app.config.missions.get_mission(key)
         if m != None:
             points += int(m['exp'])
-    new_rank = ranks.lookup_rank(points)
-    if new_rank != None and (force_update or userinfo['rank'] != new_rank['name']):
-        discord.update_rank(userinfo['id'], new_rank['name'])
-    if new_rank == None: new_rank = ''
-    else: new_rank = new_rank['name']
-    app.mongo.db.users.update_one({"_id" : userinfo['_id'] }, {'$set' : {'exp':points, 'rank':new_rank}})
+    return points
