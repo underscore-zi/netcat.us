@@ -38,7 +38,7 @@ for mission in MISSIONS:
     m = MISSIONS[mission]
     if 'docker' in m:
         containers[m['name']] = {
-            "tag":re.sub('[^0-9a-zA-Z]+', '',m['name']),
+            "tag":re.sub('[^0-9a-zA-Z-_]+', '',m['name']),
             "docker":m['docker'],
             "ports":m.get("ports", None),
         }
