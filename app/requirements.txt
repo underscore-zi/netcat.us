@@ -5,3 +5,4 @@ ConfigParser
 flask_limiter
 requests
 uwsgi
+httplib2
