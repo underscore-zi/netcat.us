@@ -6,9 +6,6 @@
 # |           you run the program. ex. `export NETCAT_CONFIG_FILE=config/dev.py; python run.py`   |
 # +-----------------------------------------------------------------------------------------------+
 
-# Used for subdomain routing, must match the Host: header so include :port if not on 80/443
-SERVER_NAME = 'netcat.local'
-
 # Enable flask debug mode, gives you nice print-outs when you get an error
 DEBUG = False
 
