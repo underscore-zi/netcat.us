@@ -6,7 +6,8 @@ module = Blueprint('challenges', __name__, url_prefix='/challenges')
 
 @module.route("/<category>/<name>/")
 @module.route("/<category>/")
-def view_category(category, name=None):
+@module.route("/")
+def view_category(category='web', name=None):
     from app import mongo
 
     if name != None and MISSIONS.get_mission(name) == None:
