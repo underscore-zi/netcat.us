@@ -39,4 +39,31 @@
           </tbody>
         </table>
 
+        <h3> Staff Leaderboard</h3>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Placement</th>
+              <th>Name</th>
+              <th>Rank</th>
+              <th>Points</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for lead in staff %}
+              <tr>
+                <td>{{loop.index}}</td>
+                <td><a href="{{url_for('users.profile', name=lead['name'])}}">{{ lead['name'] }}</a></td>
+                <td>
+                  {% if lead['rank'] != '' %}
+                  <img src="/static/images/{{ranks[lead['rank']]['image']}}" width="32px" height="32px" />
+                  {% endif %}
+                  {{lead['rank']}}
+                </td>
+                <td>{{ lead['exp'] }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
 {% include "footer.html" %}

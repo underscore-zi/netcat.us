@@ -34,7 +34,8 @@ def leaderboard():
         all_ranks[tmp_ranks[r]['name']] = tmp_ranks[r]
     from pymongo import DESCENDING
     leads = list(mongo.db.users.find({'is_staff':{'$exists':0}}).sort("exp",DESCENDING).limit(10))
-    return render_template('users/leaderboard.html', leads=leads, ranks=all_ranks)
+    staff = list(mongo.db.users.find({'is_staff':{'$exists':1}}).sort("exp",DESCENDING))
+    return render_template('users/leaderboard.html', leads=leads, staff=staff, ranks=all_ranks)
 
 
 @module.route("/ranks/")
