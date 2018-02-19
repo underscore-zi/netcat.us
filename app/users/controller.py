@@ -26,9 +26,15 @@ def profile_by_id(id):
 
 @module.route("/leaderboard/")
 def leaderboard():
+    from app.config import ranks
+    tmp_ranks = ranks.get_ranks()
+    all_ranks = {}
+    for r in tmp_ranks: 
+        print tmp_ranks[r]
+        all_ranks[tmp_ranks[r]['name']] = tmp_ranks[r]
     from pymongo import DESCENDING
     leads = list(mongo.db.users.find({'is_staff':{'$exists':0}}).sort("exp",DESCENDING).limit(10))
-    return render_template('users/leaderboard.html', leads=leads)
+    return render_template('users/leaderboard.html', leads=leads, ranks=all_ranks)
 
 
 @module.route("/ranks/")

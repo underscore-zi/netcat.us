@@ -30,18 +30,8 @@
                 <td>{{loop.index}}</td>
                 <td><a href="{{url_for('users.profile', name=lead['name'])}}">{{ lead['name'] }}</a></td>
                 <td>
-                  {% if lead['rank'] == "*** General" %}
-                    <img src="http://netcat.us/static/images/3.jpg" width="32px" height="32px" />
-                    {{ lead['rank'] }}
-
-                  {% elif lead['rank'] == "** General" %}
-                    <img src="http://netcat.us/static/images/3.jpg" width="32px" height="32px" />
-                    {{ lead['rank'] }}
-
-                  {% else %}
-                    <img src="http://netcat.us/static/images/{{ lead['rank'].lower() }}.jpg" width="32px" height="32px" />
-                    {{ lead['rank'] }}
-                  {% endif %}
+                  <img src="/static/images/{{ranks[lead['rank']]['image']}}" width="32px" height="32px" />
+                  {{lead['rank']}}
                 </td>
                 <td>{{ lead['exp'] }}</td>
               </tr>
