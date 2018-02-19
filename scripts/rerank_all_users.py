@@ -11,7 +11,6 @@ sys.path.insert(0, BASE_DIR)
 # I wrote this class for another project, eventually it'll get merged into the 
 # discord file but for now I'll just use it here
 import httplib2, cgi, json, logging, copy, time
-logging.basicConfig(format='[%(asctime)s] [%(levelname)s] %(message)s',datefmt='%H:%M:%S', level=logging.INFO)
 class JsonClient(object):
     _retry_rate = 60
     _headers = {}
@@ -159,14 +158,18 @@ class DiscordClient(object):
 import app
 import sys
 import app.config.ranks as ranks
+logging.basicConfig(format='[%(asctime)s] [%(levelname)s] %(message)s',datefmt='%H:%M:%S', level=logging.DEBUG)
+LOG = logging.getLogger('RerankScript')
 with app.app.app_context():
     discord = DiscordClient(app.app.config['BOT_TOKEN'])
     gm = discord.guild_members(app.app.config['GUILD_ID'])
     all_ranks = ranks.get_ranks()
+
     members = {}
     for m in gm: members[m['user']['id']] = m
 
-    cur = app.mongo.db.users.find({"exp":{"$gt":0}})
+    #cur = app.mongo.db.users.find({"exp":{"$gt":0}})
+    cur = app.mongo.db.users.find({})
     for userinfo in cur:
         needs_update = False
         if not 'rank' in userinfo: 
@@ -185,8 +188,7 @@ with app.app.app_context():
         if new_rank['name'] != userinfo['rank']: needs_update = True
 
         if needs_update:
-            print "{} - {}({}) - {}({})".format(userinfo['name'].encode('punycode'), userinfo['rank'], userinfo['exp'], new_rank['name'], points)
-            #Update the database
+            LOG.info("Database: %s Old:%s(%d) New:%s(%d)", userinfo['name'].encode('punycode'), userinfo['rank'], userinfo['exp'], new_rank['name'], points)
             app.mongo.db.users.update_one({"_id" : userinfo['_id'] }, {'$set' : {"exp":points, "rank":new_rank['name']}})
 
 
@@ -212,10 +214,27 @@ with app.app.app_context():
 
             #Check if we needs to update thier ranks of not
             if len(set_ranks) != len(members[userinfo['id']]['roles']):
+                LOG.info("Discord: %s - %s", userinfo['name'].encode('punycode'), new_rank)
                 #Generate the JSON
                 patch_data = ''
                 for r in set_ranks:
                     patch_data += '"{}",'.format(r)
                 patch_data = '{"roles":[%s]}'%(patch_data[:-1])
                 discord._patch('/guilds/{}/members/{}'.format(app.app.config['GUILD_ID'], userinfo['id']), patch_data)
+            del members[userinfo['id']]
+    
 
+    rank_roles = [app.discord.ROLES[all_ranks[rank]['role']] for rank in all_ranks]
+    for mem in members:
+        cur = members[mem]
+        if cur['user']['username'] == 'zi':
+            new_roles = [role for role in cur['roles'] if not role in rank_roles]
+            if len(new_roles) != len(cur['roles']):
+                LOG.info("Discord: %s - Not on netcat but has rank related roles.", cur['user']['username'].encode('punycode'))
+                patch_data = ''
+                for r in new_roles:
+                    patch_data += '"{}",'.format(r)
+                patch_data = '{"roles":[%s]}'%(patch_data[:-1])
+                discord._patch('/guilds/{}/members/{}'.format(app.app.config['GUILD_ID'], cur['id']), patch_data)
+
+    
