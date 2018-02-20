@@ -49,6 +49,11 @@ def submit(category, name):
         flash("Error: You must provide a flag.")
         return redirect(url_for('challenges.view_category', category=category, name=name))
 
+    #Accept flags in FLAG{...} or just ... format
+    if flag[-1] == '}' and '{' in flag:
+        flag = flag.split("{")[1][:-1]
+    print flag
+
     if flag != mission['flag']:
         flash("Error: Incorrect flag.")
         return redirect(url_for('challenges.view_category', category=category, name=name))
