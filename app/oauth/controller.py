@@ -38,7 +38,11 @@ def login():
         info = user.get_discord()
         if info != None and user.get_user_document(info['id']) != None:
             return redirect(url_for('home'))
-    app.config['OAUTH2_REDIRECT_URI'] = 'http://{}/callback'.format(request.headers.get('Host', ''))
+    if request.url.startswith('http://'):
+        app.config['OAUTH2_REDIRECT_URI'] = 'http://{}/callback'.format(request.headers.get('Host', ''))
+        os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = 'true'
+    else:
+        app.config['OAUTH2_REDIRECT_URI'] = 'https://{}/callback'.format(request.headers.get('Host', ''))
     return redirect(discord_api.generate_auth_url())
 
 @module.route('/logout')
