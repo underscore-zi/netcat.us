@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, g,request
 from flask_pymongo import PyMongo
+import datetime
 app = Flask(__name__)
 
 # To overload default config point NETCAT_CONFIG_FILE to another config file
@@ -87,5 +88,6 @@ def setup_userinfo():
         else: g.userinfo = ui
     app.jinja_env.globals['userinfo'] = g.userinfo 
     app.jinja_env.globals['HOST'] = request.headers.get('Host', '')
+    app.jinja_env.globals['NOW'] = datetime.datetime.now()
 
 
