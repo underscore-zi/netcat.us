@@ -3,9 +3,6 @@ from requests_oauthlib import OAuth2Session
 import os
 from app import app, user, discord as discord_api
 
-if 'http://' in app.config['OAUTH2_REDIRECT_URI']:
-    os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = 'true'
-
 module = Blueprint('oauth', __name__, url_prefix='/oauth')
 
 @module.route('/callback')
@@ -41,6 +38,7 @@ def login():
         info = user.get_discord()
         if info != None and user.get_user_document(info['id']) != None:
             return redirect(url_for('home'))
+    app.config['OAUTH2_REDIRECT_URI'] = 'http://{}/callback'.format(request.headers.get('Host', ''))
     return redirect(discord_api.generate_auth_url())
 
 @module.route('/logout')

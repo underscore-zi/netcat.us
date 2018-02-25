@@ -13,9 +13,6 @@ DEBUG = False
 OAUTH2_CLIENT_ID = ""
 OAUTH2_CLIENT_SECRET = ""
 
-# Discord won't accept localhost as a callback domain
-OAUTH2_REDIRECT_URI = 'http://netcat.local/callback'
-
 # Generate your own random string for this its used for prevent tampering with the session cookie
 SECRET_KEY = "" 
 
