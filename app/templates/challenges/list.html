@@ -92,7 +92,7 @@
                           {% if mission['type'] != 'steganography' and mission.get('ports', 0) != 0 %}
                           <div class="row challenge-info">
                             <div class="col-xs-12 col-sm-2">Server:</div>
-                            <div class="col-xs-2 hidden-sm hidden-md hidden-lg hidden-xl">&nbsp;</div><div class="col-xs-10 col-sm-10">netcat.us:{{mission['ports'].split(':')[1]}}</div>
+                            <div class="col-xs-2 hidden-sm hidden-md hidden-lg hidden-xl">&nbsp;</div><div class="col-xs-10 col-sm-10">{{HOST}}:{{mission['ports'].split(':')[1]}}</div>
                           </div>
                           {% endif %}
                         </div>

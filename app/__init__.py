@@ -86,5 +86,6 @@ def setup_userinfo():
         if not ui: g.userinfo = None
         else: g.userinfo = ui
     app.jinja_env.globals['userinfo'] = g.userinfo 
+    app.jinja_env.globals['HOST'] = request.headers.get('Host', '')
 
 
