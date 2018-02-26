@@ -234,6 +234,6 @@ with app.app.app_context():
             for r in new_roles:
                 patch_data += '"{}",'.format(r)
             patch_data = '{"roles":[%s]}'%(patch_data[:-1])
-            discord._patch('/guilds/{}/members/{}'.format(app.app.config['GUILD_ID'], cur['id']), patch_data)
+            discord._patch('/guilds/{}/members/{}'.format(app.app.config['GUILD_ID'], cur['user']['id']), patch_data)
 
     
