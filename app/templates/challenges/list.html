@@ -1,5 +1,5 @@
 {% set active_page = "challenges" %}
-{% set title = active_category + " Challenges" %}
+{% set title = active_category.replace('_', ' ').title() + " Challenges" %}
 {% include "header.html" %}
 {% include "navbar.html" %}
 <style>
@@ -46,7 +46,7 @@
               <ul class="nav nav-pills nav-stacked">
                 {% for cat in categories %}
                   {%if cat == active_category%}<li class="active">{%else%}<li>{%endif%}
-                  <a href="{{url_for('challenges.view_category', category=cat)}}">{{cat | title | replace('_', ' ')}}</a>
+                  <a href="{{url_for('challenges.view_category', category=cat)}}">{{cat | replace('_', ' ') | title }}</a>
                 {%endfor%}
               </ul>
             </div>
