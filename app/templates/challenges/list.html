@@ -83,17 +83,27 @@
                             <div class="col-xs-12 col-sm-2">Points:</div>
                             <div class="col-xs-2 hidden-sm hidden-md hidden-lg hidden-xl">&nbsp;</div><div class="col-xs-10 col-sm-10">{{ mission['exp'] }}</div>
                           </div>
-                          {% if not mission['link']  == "None" %}
+                          {% if not mission.get('link', 'None')  == "None" %}
                           <div class="row challenge-info">
                             <div class="col-xs-12 col-sm-2">Link:</div>
                             <div class="col-xs-2 hidden-sm hidden-md hidden-lg hidden-xl">&nbsp;</div><div class="col-xs-10 col-sm-10"><a href="{{ mission['link'] }}">{{ mission['link'] }}</a></div>
                           </div>
                           {% endif %}
-                          {% if mission['type'] != 'steganography' and mission.get('ports', 0) != 0 %}
-                          <div class="row challenge-info">
-                            <div class="col-xs-12 col-sm-2">Server:</div>
-                            <div class="col-xs-2 hidden-sm hidden-md hidden-lg hidden-xl">&nbsp;</div><div class="col-xs-10 col-sm-10">{{HOST}}:{{mission['ports'].split(':')[1]}}</div>
-                          </div>
+                          {% if mission.get('ports', 0) != 0 %}
+                            {% set server_str = mission.get('server', 'nc {HOST} {PORT}').replace('{HOST}', HOST).replace('{PORT}', mission['ports'].split(':')[1]) %}
+                            {%if server_str != ''%}
+                            <div class="row challenge-info">
+                              <div class="col-xs-12 col-sm-2">Server:</div>
+                              <div class="col-xs-2 hidden-sm hidden-md hidden-lg hidden-xl">&nbsp;</div>
+                              <div class="col-xs-10 col-sm-10">
+                                {% if server_str[:4] == 'http' %}
+                                  <a href="{{ server_str }}">{{ server_str }}</a>
+                                {% else %}
+                                  {{ server_str }}
+                                {% endif %}
+                              </div>
+                            </div>
+                            {% endif %}
                           {% endif %}
                         </div>
                       </div>
