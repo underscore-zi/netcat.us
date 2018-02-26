@@ -227,14 +227,13 @@ with app.app.app_context():
     rank_roles = [app.discord.ROLES[all_ranks[rank]['role']] for rank in all_ranks]
     for mem in members:
         cur = members[mem]
-        if cur['user']['username'] == 'zi':
-            new_roles = [role for role in cur['roles'] if not role in rank_roles]
-            if len(new_roles) != len(cur['roles']):
-                LOG.info("Discord: %s - Not on netcat but has rank related roles.", cur['user']['username'].encode('punycode'))
-                patch_data = ''
-                for r in new_roles:
-                    patch_data += '"{}",'.format(r)
-                patch_data = '{"roles":[%s]}'%(patch_data[:-1])
-                discord._patch('/guilds/{}/members/{}'.format(app.app.config['GUILD_ID'], cur['id']), patch_data)
+        new_roles = [role for role in cur['roles'] if not role in rank_roles]
+        if len(new_roles) != len(cur['roles']):
+            LOG.info("Discord: %s - Not on netcat but has rank related roles.", cur['user']['username'].encode('punycode'))
+            patch_data = ''
+            for r in new_roles:
+                patch_data += '"{}",'.format(r)
+            patch_data = '{"roles":[%s]}'%(patch_data[:-1])
+            discord._patch('/guilds/{}/members/{}'.format(app.app.config['GUILD_ID'], cur['id']), patch_data)
 
     
