@@ -2,6 +2,7 @@ from flask import session
 from requests_oauthlib import OAuth2Session
 import requests
 from app import app
+import json
 
 TOKEN_PATH = '/oauth2/token'
 ROLES = {}
@@ -53,6 +54,14 @@ def _put(endpoint, data=None):
     if data != None: h['Content-Type'] = 'application/json'
     res = requests.put(app.config['DISCORD_API_URL'] + endpoint, data=data, headers=h)
 
+def _post(endpoint, data=None):
+    h = HEADERS
+    if data != None: h['Content-Type'] = 'application/json'
+    print app.config['DISCORD_API_URL'] + endpoint
+    print data
+    res = requests.post(app.config['DISCORD_API_URL'] + endpoint, data=data, headers=h)
+    return res
+
 def _delete(endpoint):
     res = requests.put(app.config['DISCORD_API_URL'] + endpoint, headers=HEADERS)
 
@@ -84,6 +93,10 @@ def set_role(user_id, role_id):
 
 def unset_role(user_id, role_id):
     res = _delete('/guilds/{}/members/{}/roles/{}'.format(app.config['GUILD_ID'], user_id, role_id))
+
+def webhook(path, data):
+    res = _post('/webhooks/{}'.format(path), json.dumps(data))
+
 
 
 def update_rank(uid,rank_name):
