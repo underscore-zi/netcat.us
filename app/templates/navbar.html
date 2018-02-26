@@ -15,7 +15,17 @@
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
           <li class="{% if active_page == 'home' %}active{%endif%}"><a href="/">Welcome</a></li>
-          <li class="{% if active_page == 'challenges' %}active{%endif%}"><a href="{{url_for('challenges.view_category')}}">Challenges</a></li>
+          <li class="dropdown {% if active_page == 'challenges' %}active{%endif%}">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Challenges<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="{% if active_page == 'challenges' and active_category == 'web' %}active{%endif%}"><a href="{{url_for('challenges.view_category', category='web')}}">Web</a></li>
+              <li class="{% if active_page == 'challenges' and active_category == 'pwnables' %}active{%endif%}"><a href="{{url_for('challenges.view_category', category='pwnables')}}">Pwnables</a></li>
+              <li class="{% if active_page == 'challenges' and active_category == 'crypto' %}active{%endif%}"><a href="{{url_for('challenges.view_category', category='crypto')}}">Crypto</a></li>
+              <li class="{% if active_page == 'challenges' and active_category == 'reverse_engineering' %}active{%endif%}"><a href="{{url_for('challenges.view_category', category='reverse_engineering')}}">Reverse Engineering</a></li>
+              <li class="{% if active_page == 'challenges' and active_category == 'steganography' %}active{%endif%}"><a href="{{url_for('challenges.view_category', category='steganography')}}">Steganography</a>
+                <li class="{% if active_page == 'challenges' and active_category == 'miscellaneous' %}active{%endif%}"><a href="{{url_for('challenges.view_category', category='miscellaneous')}}">Miscellaneous</a></li>
+            </ul>
+          </li>
           <li class="{% if active_page == 'ranks' %}active{%endif%}"><a href="{{url_for('users.ranks')}}">Ranks</a></li>
           <li class="{% if active_page == 'leaderboard' %}active{%endif%}"><a href="{{url_for('users.leaderboard')}}">Leaderboards</a></li>
           <li class="{% if active_page == 'learn' %}active{%endif%}"><a href="/learn">Learn</a></li>
