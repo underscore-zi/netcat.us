@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template, flash, g, session, redirect, url_for, abort
+from flask import Blueprint, request, render_template, flash, g, session, redirect, url_for, abort, send_file
 from app.config import missions as MISSIONS
 from app import user
 from app import discord
@@ -64,5 +64,32 @@ def submit(category, name):
     discord.webhook('417750331724791819/BTqS2aWQ0R6xnPGCeX7weHRm1-FNWdpMTaxEoYIBzsyhCLoYAGoj2rY9rYKUudeJwJt0', {'content':msg} )
     flash('Congratulations! You have been awarded {} points!'.format(mission['exp']))
     return redirect(url_for('challenges.view_category', category=category))
+
+@module.route("/<category>/<name>/<file>")
+def serve_file(category, name, file):
+    mission = MISSIONS.get_mission(name)
+    if not 'files' in mission:
+        flash('Error: Request file not found.')
+        return redirect(url_for('challenges.view_category', category=category))
+
+    files = [fn.split(':')[0] for fn in mission['files'].split(',')]
+    if not file in files:
+        flash('Error: Request file not found.')
+        return redirect(url_for('challenges.view_category', category=category))
+
+    file = '{}/{}/{}'.format('/var/www/netcat.us/missions', mission['name'], file)
+    return send_file(file)
+'''
+    if 'docker' in mission:
+        file = '{}/{}'.format(mission['docker'], file)
+        return send_file(file)
+    else:
+        file = '{}/{}/{}'.format('/var/www/netcat.us/missions', mission['name'], file)
+        return send_file(file)
+'''
+
+
+
+
 
 
