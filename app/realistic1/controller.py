@@ -31,6 +31,11 @@ def do_admin_login():
         flash(u'Error: Wrong password!', 'danger')
     return dome()
 
+@module.route('/dronelogout')
+def do_logout():
+    session.pop('realistic1_logged_in', None)
+    return redirect(url_for('realistic1.dronepage'))
+
 def dome():
     if not session.get('realistic1_logged_in'):
         return render_template('realistic1/login.html')
