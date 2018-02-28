@@ -104,7 +104,8 @@
                               </div>
                             </div>
                             {% endif %}
-                            {% if mission.get('files', '') != '' %}
+                          {% endif %}
+                          {% if 'files' in mission %}
                             <div class="row challenge-info">
                               <div class="col-xs-12 col-sm-2">Files:</div>
                               <div class="col-xs-2 hidden-sm hidden-md hidden-lg hidden-xl">&nbsp;</div>
@@ -118,7 +119,6 @@
                               {% endfor %}
                               </div>
                             </div>
-                            {% endif %}
                           {% endif %}
                         </div>
                       </div>
