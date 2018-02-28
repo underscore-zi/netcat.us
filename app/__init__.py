@@ -25,9 +25,6 @@ app.register_blueprint(challenge_module)
 from app.users.controller import module as users_module
 app.register_blueprint(users_module)
 
-from app.learn.controller import module as learn_module
-app.register_blueprint(learn_module)
-
 from app.oauth.controller import module as oauth_module
 app.register_blueprint(oauth_module, url_prefix='')
 

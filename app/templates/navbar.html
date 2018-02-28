@@ -28,7 +28,6 @@
           </li>
           <li class="{% if active_page == 'ranks' %}active{%endif%}"><a href="{{url_for('users.ranks')}}">Ranks</a></li>
           <li class="{% if active_page == 'leaderboard' %}active{%endif%}"><a href="{{url_for('users.leaderboard')}}">Leaderboards</a></li>
-          <li class="{% if active_page == 'learn' %}active{%endif%}"><a href="/learn">Learn</a></li>
           {%if userinfo != None %}
           <li class="dropdown btn-success">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ userinfo['name'] }} <b class="caret"></b></a>
