@@ -112,9 +112,9 @@
                               <div class="col-xs-10 col-sm-10">
                               {% for file in mission['files'].split(',') %}
                                 {% if ':' in file %}
-                                <div class="challenge-file"><a href="{{mission['name']}}/{{file.split(':')[0]}}">{{file.split(':')[1]}}</a></div>
+                                <div class="challenge-file"><a href="{{url_for('challenges.serve_file', category=active_category, name=mission['name'], file=file.split(':')[0])}}">{{file.split(':')[1]}}</a></div>
                                 {%else%}
-                                <div class="challenge-file"><a href="{{mission['name']}}/{{file}}">{{file}}</a></div>
+                                <div class="challenge-file"><a href="{{url_for('challenges.serve_file', category=active_category, name=mission['name'], file=file)}}">{{file}}</a></div>
                                 {% endif %}
                               {% endfor %}
                               </div>
