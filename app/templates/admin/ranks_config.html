@@ -17,17 +17,16 @@
         {% include "flash.html" %}
         <div class="row"><h1>Rank Configuration</h1></div>
         {%if IS_OPS %}
+        <hr />
         <div class="row">
-          <div class="col-xs-6">
+          <div class="col-xs-3">
             <form method="POST" action="{{url_for('admin.reload_config', file='ranks')}}">
               <input type="hidden" name="csrf_token" value="{{CSRF_TOKEN}}"/>
               <input type="submit" value="Reload File" class="btn btn-block btn-danger"/>
             </form>
           </div>
-          <div class="col-xs-6">
-            <form method="GET" action="{{url_for('admin.read_raw_config', file='ranks')}}">
-              <input type="submit" value="Modify File" class="btn btn-block btn-danger"/>
-            </form>
+          <div class="col-xs-9">
+            &nbsp;
           </div>
         </div>
         {%endif%}

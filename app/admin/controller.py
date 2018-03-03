@@ -148,49 +148,6 @@ def reload_config(file):
     
     return redirect(url_for('admin.view_config', file=file))
 
-    
-
-'''Saves changes to the .config'''
-@module.route('/config/<file>/edit', methods=['GET'])
-def read_raw_config(file):
-    require_role(OPS_ROLE)
-
-    if file == 'missions':
-        fn = 'missions.config'
-    elif file == 'ranks':
-        fn = 'ranks.config'
-    else:
-        flash('Error: Unknown config ({})'.format(file))
-        return redirect(url_for('admin.view_containers'))
-
-    with open(app.config['APP_BASE'] + '/config/' + fn, 'r') as fp: 
-        content=fp.read()
-
-    return render_template('admin/edit_config.html', filename=file, content=content)
-
-@module.route('/config/<file>/save', methods=['POST'])
-def save_config(file):
-    require_role(OPS_ROLE)
-
-    if file == 'missions':
-        fn = 'missions.config'
-    elif file == 'ranks':
-        fn = 'ranks.config'
-    else:
-        flash('Error: Unknown config ({})'.format(file))
-        return redirect(url_for('admin.view_containers'))
-
-    content = action = request.form.get('content', None)
-    if content == None or content.strip() == '':
-        flash('Error: No content.')
-        return redirect(url_for('admin.read_raw_config', file=file))
-
-    with open(app.config['APP_BASE'] + '/config/' + fn, 'w') as fp: 
-        fp.write(content)
-
-    return reload_config(file)
-
-
 '''Runs a script out of app/Scripts'''
 @module.route('/run/<name>', methods=['POST'])
 def run_script(name):
