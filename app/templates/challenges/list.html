@@ -9,11 +9,18 @@
   margin:0px;
   line-height:100%;
 }
-.mission-modal .modal-footer .challenge-info a {
+.mission-modal .modal-footer .challenge-info {
   font-size:60%;
   padding:0px;
   margin-top:10px;
 }
+.mission-modal .modal-footer .challenge-link {
+  float:right;
+}
+.mission-modal .modal-footer .challenge-author {
+  float: left;
+}
+
 .mission-modal input[type=text] {
   margin-bottom:5px;
 }
@@ -137,7 +144,8 @@
                           <button type="submit" class="btn btn-block btn-success" {%if userinfo==None%}disabled{%endif%}>Submit Flag</button>
                         </form>
                         {%endif%}
-                        <div class="challenge-info"><a href="{{url_for('challenges.view_category', category=active_category, name=mission['name'])}}">Direct link to challenge</a></div>
+                        {% if 'author' in mission %}<div class="challenge-info challenge-author">Challenge created by: {{mission['author']}}</div>{%endif%}
+                        <div class="challenge-info challenge-link"><a href="{{url_for('challenges.view_category', category=active_category, name=mission['name'])}}">Direct link to challenge</a></div>
                       </div>
                     </div>
                   </div>
