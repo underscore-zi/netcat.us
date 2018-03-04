@@ -5,7 +5,7 @@
     </div>
   </div> <!-- /container -->
 
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-108203375-1"></script>
+<script async src="//www.googletagmanager.com/gtag/js?id=UA-108203375-1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -14,10 +14,16 @@
   gtag('config', 'UA-108203375-1');
 </script>
 <!-- jQuery Version 1.11.1 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="/static/js/jquery.quickfit.js"></script>
 
 <!-- Bootstrap Core Intermediate -->
 <script src="/static/js/bootstrap.js"></script>
-
+<script type="text/javascript">
+  window.onload = function() {
+    {% if missionName %}$('#modal{{missionName}}').modal('show');{%endif%}
+    $(".challenge-title").quickfit({min:8, max:18, tolerance:0.1});
+  };
+</script> 
 </body>
 </html>

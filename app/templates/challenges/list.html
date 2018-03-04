@@ -2,36 +2,6 @@
 {% set title = active_category.replace('_', ' ').title() + " Challenges" %}
 {% include "header.html" %}
 {% include "navbar.html" %}
-<style>
-.mission-modal .challenge-info {
-  font-size:80%;
-  padding:0px;
-  margin:0px;
-  line-height:100%;
-}
-.mission-modal .modal-footer .challenge-info {
-  font-size:60%;
-  padding:0px;
-  margin-top:10px;
-}
-.mission-modal .modal-footer .challenge-link {
-  float:right;
-}
-.mission-modal .modal-footer .challenge-author {
-  float: left;
-}
-
-.mission-modal input[type=text] {
-  margin-bottom:5px;
-}
-.mission-modal .alert {
-  text-align:left;
-}
-.mission-modal {
-  overflow-wrap: break-word;
-  line-height:110%
-}
-</style>
   <div class="container">
 
     <div style="margin-bottom:100px"></div>
@@ -64,10 +34,9 @@
               {% for mission in missionDetails %}
                 <a href="#"  data-toggle="modal" data-target="#modal{{ mission['name'] }}">
                   <div class="col-md-3">
-                    <div class="panel {%if mission['solved'] == True%}panel-success panel-bg-success{%else%}panel-danger panel-bg-danger{%endif%}">
-                      <strong>{{ mission['title'] }}</strong>
-                      <br />
-                      ({{ mission['exp'] }} points)
+                    <div class="panel challenge-panel {%if mission['solved'] == True%}panel-success panel-bg-success{%else%}panel-danger panel-bg-danger{%endif%}">
+                      <div class="challenge-title" x-hidden-id="hidden_{{mission['name']}}">{{ mission['title'] }}</div>
+                      <div class="challenge-points">{{ mission['exp'] }}</div>
                     </div>
                   </div>
                 </a>
@@ -155,12 +124,12 @@
             </div><!-- ./row -->
           </div><!-- ./col-9-md -->
         </div><!-- ./row -->
-
 {% if missionName %}
 <script type="text/javascript">
   window.onload = function() {
-        $('#modal{{missionName}}').modal('show');
+    $('#modal{{missionName}}').modal('show');
   };
-</script> 
+</script>
 {%endif%}
+
 {% include "footer.html" %}

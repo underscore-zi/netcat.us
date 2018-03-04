@@ -2,7 +2,6 @@
 {% set title = user.name %}
 {% include "header.html" %}
 {% include "navbar.html" %}
-
   <div class="container">
 
     <div style="margin-bottom:100px"></div>
@@ -13,41 +12,25 @@
         <h1> {{ user.name }} </h1>
         <h2> {{ user.rank }} - {{ user.exp }} points </h2>
         <hr />
-        <style>
-        .challenge-block {
-          display:inline-block;
-          width:150px;
-          text-align:center;
-          background-color:#ab0000;
-          font-size:12pt;
-          padding-left:3px;
-          padding-right:3px;
-        }
-        .challenge-block, .challenge-block a {
-          color:white;
-        }
-        .challenge-solved {
-          background-color:#209e00;
-        }
-        .challenge-unsolved {
-          background-color:#ab0000;
-        }
-        .points {
-          font-size:80%;
-          margin-top:-10px;
-        }
-        </style>
-
         {% for category in missions %}
         <div class="row">
           <div class="col-sm-3"><h4> {{category | title | replace('_', ' ')}}  </h4></div>
           <div class="col-sm-9">
+            <div class="container">
             {% for mission in missions[category] %}
-              <div class="challenge-block {% if user[missions[category][mission]['name']] %} challenge-solved {% endif %}">
-                <a href="{{url_for('challenges.view_category', category=category, name=mission)}}">{{missions[category][mission]['title'] }}</a><div class="points">({{missions[category][mission]['exp'] }} points)</div></div>
+              <div class="col-md-3">
+                <a href="#">
+                <div class="panel challenge-panel {% if user[missions[category][mission]['name']] %}panel-success panel-bg-success{%else%}panel-danger panel-bg-danger{%endif%}">
+                  <div class="challenge-title">{{ missions[category][mission]['title'] }}</div>
+                  <div class="challenge-points">{{ missions[category][mission]['exp'] }}</div>
+                </div>
+                </a>
+              </div>
             {% endfor %}
+            </div>
           </div>
         </div>
         <hr />
         {% endfor %}
+}
 {% include "footer.html" %}
