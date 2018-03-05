@@ -79,14 +79,6 @@ def serve_file(category, name, file):
 
     file = '{}/{}/{}'.format('/var/www/netcat.us/missions', mission['name'], file)
     return send_file(file)
-'''
-    if 'docker' in mission:
-        file = '{}/{}'.format(mission['docker'], file)
-        return send_file(file)
-    else:
-        file = '{}/{}/{}'.format('/var/www/netcat.us/missions', mission['name'], file)
-        return send_file(file)
-'''
 
 
 
