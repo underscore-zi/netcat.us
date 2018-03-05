@@ -22,7 +22,7 @@
                 <a href="{{url_for('challenges.view_category', category=category, name=missions[category][mission]['name'])}}">
                 <div class="panel challenge-panel {% if user[missions[category][mission]['name']] %}panel-success panel-bg-success{%else%}panel-danger panel-bg-danger{%endif%}">
                   <div class="challenge-title">{{ missions[category][mission]['title'] }}</div>
-                  <div class="challenge-points">{{ missions[category][mission]['exp'] }}</div>
+                  <div class="challenge-points">{{ missions[category][mission]['exp'] }} points</div>
                 </div>
                 </a>
               </div>
