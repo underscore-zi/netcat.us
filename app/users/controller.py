@@ -5,10 +5,8 @@ from collections import OrderedDict
 
 module = Blueprint('users', __name__, url_prefix='/users')
 
-@module.route("/name/<name>/")
-def profile(name):
-    user = mongo.db.users.find_one_or_404({'name':name})
 
+def display_profile(user):
     categories = MISSIONS.get_categories()
     missions = OrderedDict()
     for cat in categories:
@@ -16,13 +14,17 @@ def profile(name):
         missions[cat] = OrderedDict()
         for m in ms:
             missions[cat][m['name']] = m
-
     return render_template('users/profile.html', user=user, missions=missions, category_titles=categories)
+
+@module.route("/name/<name>/")
+def profile(name):
+    user = mongo.db.users.find_one_or_404({'name':name})
+    return display_profile(user)
 
 @module.route("/id/<id>/")
 def profile_by_id(id):
     user = mongo.db.users.find_one_or_404({"id":id})
-    return redirect(url_for('users.profile', name=user['name']))
+    return display_profile(user)
 
 @module.route("/leaderboard/")
 def leaderboard():

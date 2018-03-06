@@ -28,7 +28,7 @@
             {% for lead in leads %}
               <tr>
                 <td>{{loop.index}}</td>
-                <td><a href="{{url_for('users.profile', name=lead['name'])}}">{{ lead['name'] }}</a></td>
+                <td><a href="{{url_for('users.profile_by_id', id=lead['id'])}}">{{ lead['name'] }}</a></td>
                 <td>
                   <img src="/static/images/{{ranks[lead['rank']]['image']}}" width="32px" height="32px" />
                   {{lead['rank']}}
@@ -53,7 +53,7 @@
             {% for lead in staff %}
               <tr>
                 <td>{{loop.index}}</td>
-                <td><a href="{{url_for('users.profile', name=lead['name'])}}">{{ lead['name'] }}</a></td>
+                <td><a href="{{url_for('users.profile_by_id', id=lead['id'])}}">{{ lead['name'] }}</a></td>
                 <td>
                   {% if lead['rank'] != '' %}
                   <img src="/static/images/{{ranks[lead['rank']]['image']}}" width="32px" height="32px" />
