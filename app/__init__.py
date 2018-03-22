@@ -54,18 +54,13 @@ def letsencrpyt(token_value):
 def intermediate3():
     import app.config.missions 
     if request.headers.get('User-Agent') == 'gotcharules':
-        return 'The flag is: ' + app.config.missions.get_mission('intermediate3')['flag']
+        return 'FLAG{%s}' % app.config.missions.get_mission('intermediate3')['flag']
     return 'Your user-agent is not correct.'
-
-@app.route("/basic/just/gonna/put/this/here/password.txt")
-def basic2():
-    import app.config.missions 
-    return app.config.missions.get_mission('basic2')['flag']
 
 @app.route("/robots.txt")
 def basic3():
     import app.config.missions 
-    return app.config.missions.get_mission('basic3')['flag']
+    return 'FLAG{%s}' %  app.config.missions.get_mission('basic3')['flag']
 
 @app.route('/dronepage/')
 def realistic1():
