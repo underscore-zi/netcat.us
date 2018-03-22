@@ -8,7 +8,7 @@ BIND_PORT = 9999
 def handle_client(client_socket):
     request = client_socket.recv(1024)
     print "[*] Received: " + request
-    client_socket.send('password is 69e0f71f25ece4351e4d73af430bec43 \n\n\n')
+    client_socket.send('FLAG{69e0f71f25ece4351e4d73af430bec43}\n\n\n')
     client_socket.close()
 
 def tcp_server():
