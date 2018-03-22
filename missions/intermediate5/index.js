@@ -44,7 +44,7 @@ app.get('/captcha_submit', function (req, res) {
 			//SOLVED
 			//Show Flag
 			res.set('Content-Type', 'text/html');
-			res.status(200).send("<h1>Password is <code>xMosaku55</code></h1>");
+			res.status(200).send("<h1>FLAG{xMosaku55}</h1>");
  			return;
 		} else {
 			res.status(400).send("YOU FAILED!");
