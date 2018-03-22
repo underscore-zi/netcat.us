@@ -9,7 +9,7 @@ def handle_client(client_socket):
     request = client_socket.recv(1024)
     print "[*] Received: " + request
     if len(request) > 500:
-    	client_socket.send('password is overflowyourmomsbox \n\n\n')
+    	client_socket.send('FLAG{overflowyourmomsbox} \n\n\n')
     	client_socket.close()
     else:
 	client_socket.send('This server is unhackable. Fuck off!\n\n\n')
