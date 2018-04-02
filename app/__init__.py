@@ -34,6 +34,9 @@ app.register_blueprint(real1_module)
 from app.admin.controller import module as admin_module
 app.register_blueprint(admin_module)
 
+from app.api.controller import module as api_module
+app.register_blueprint(api_module)
+
 
 # Setup domain root routes
 @app.route("/")
