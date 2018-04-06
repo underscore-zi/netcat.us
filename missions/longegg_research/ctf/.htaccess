@@ -1,0 +1,5 @@
+<Files ./flag.txt>
+Order Allow,Deny
+Deny from all
+</Files>
+Options All +Indexes
