@@ -1,3 +1,4 @@
+<?php if(@$_COOKIE['pass']=='OMGTHEWORLDISENDING') { ?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -12,3 +13,4 @@
                 <input type="submit" value="Submit"/>
             </div>
         </form>
+<?php } ?>
