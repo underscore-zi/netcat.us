@@ -5,7 +5,8 @@ $output = "";
 $err = "";
 if (!file_exists($_SESSION["dir"] . "/script.cmd")) {
   $err = "No script found\nPlease upload a script first";
-} else if (strcmp( md5_file($_SESSION["dir"] . "/script.cmd"), $_SESSION["hash"] ) == 0){
+// vuln line
+} else if (md5_file($_SESSION["dir"] . "/script.cmd") == $_SESSION["hash"]){
     $handle = fopen($_SESSION["dir"] . "/script.cmd", "r");
     if ($handle) {
         while (($line = fgets($handle)) !== false) {
@@ -13,12 +14,14 @@ if (!file_exists($_SESSION["dir"] . "/script.cmd")) {
             if (substr($line,0,1) != "#"){
                 $cmd = preg_split('/\s+/', $line);
                 switch ($cmd[0]) {
+                    case "ELEVATE":
+                        $elevated = TRUE;
+                        break;
                     case "ECHO":
                         $output .= substr($line, 5);
                         break;
                     case "LISTDIR":
-                          $output .= "flag.txt\nmail.mbox\nnotes.txt\n";
-                          break;
+                        $output .= "flag.txt\nmail.mbox\nnotes.txt\n";
                         break;
                     case "READ":
                         $readfile = trim(preg_replace("/[^a-zA-Z0-9\.]/", "", substr($line,5)));
@@ -44,9 +47,8 @@ if (!file_exists($_SESSION["dir"] . "/script.cmd")) {
                                 break;
                             default:
                                 $output .= "File not found\n";
-                            }
-                    case "ELEVATE":
-                        $elevated = TRUE;
+                                break;
+                        }
                         break;
                     case "DATE":
                         $output .= date("Y-m-d"). "\n";
@@ -62,12 +64,10 @@ if (!file_exists($_SESSION["dir"] . "/script.cmd")) {
         $err =  "Could not open script";
     }
 } else {
-    $err = "Script signature differs from originally uploaded file\n". md5_file($_SESSION["dir"] . "/script.cmd") . " != " . $_SESSION["hash"];
+    // fake error message to show the vuln line
+    $err = "Error on line 14:\n  if (md5_file(\$_SESSION[\"dir\"] . \"/script.cmd\") == \$_SESSION[\"hash\"])\nhash mismatch";
 }
 ?>
-
-
-
 <!DOCTYPE html>
 <html>
 <head>

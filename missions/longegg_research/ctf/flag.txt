@@ -1,1 +1,1 @@
-FLAG{LARG3_HA5H_C0LL1D3R}
+FLAG{meet_me_halfway}
