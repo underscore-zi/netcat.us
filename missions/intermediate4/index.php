@@ -9,6 +9,7 @@ function setck($name,$val) {
 
 function resetGame() {
 	setck("rounds", 1);
+	$_SESSION['c2_time'] = time();
 	$_SESSION['c2_streak'] = 0;
 	$_SESSION['c2_wrong'] = 0;
 }
@@ -21,6 +22,7 @@ if(isset($_POST['source'])) {
 }
 
 session_start();
+if(!isset($_SESSION['c2_time'])) $_SESSION['c2_time'] = time();
 if(!isset($_SESSION['c2_streak'])) $_SESSION['c2_streak'] = 0;
 if(!isset($_SESSION['c2_wrong']))  $_SESSION['c2_wrong'] = 0;
 if(!isset($_COOKIE['rounds'])||!is_numeric($_COOKIE['rounds'])||$_COOKIE['rounds'] >= PHP_INT_MAX) {	
@@ -34,6 +36,13 @@ if(isset($_POST['reset'])) {
 	//Give the poor unlucky players a way to restart after the game gets too hard
 	resetGame();
 }
+
+if(time()-$_SESSION['c2_time'] > 600) {
+	//You have to finish within 10minutes or the game restarts
+	resetGame();
+}
+
+
 
 //Make it more difficult with every round
 $rnd =  mt_rand(1, $_COOKIE['rounds']);
