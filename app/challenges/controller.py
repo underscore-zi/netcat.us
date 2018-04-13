@@ -60,7 +60,7 @@ def submit(category, name):
         return redirect(url_for('challenges.view_category', category=category, name=name))
 
     user.complete_challenge(name)
-    msg = "{} has just solved {} for {} points".format(userinfo['name'], mission['title'], mission['exp'])
+    msg = "{} has just solved {} for {} points".format(userinfo['name'].encode('utf8'), mission['title'], mission['exp'])
     discord.webhook('417750331724791819/BTqS2aWQ0R6xnPGCeX7weHRm1-FNWdpMTaxEoYIBzsyhCLoYAGoj2rY9rYKUudeJwJt0', {'content':msg} )
     flash('Congratulations! You have been awarded {} points!'.format(mission['exp']))
     return redirect(url_for('challenges.view_category', category=category))
