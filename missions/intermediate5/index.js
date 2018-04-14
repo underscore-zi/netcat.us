@@ -13,7 +13,7 @@ app.use(session({
 var svgCaptcha = require('svg-captcha');
 
 app.get('/', function (req, res) {
-	res.status(200).send("/captcha for the captcha... /captcha_submit to submit answer. submit answer within 1000 milliseconds to get the flag.");
+	res.status(200).send("You have 1000ms to solve the captcha.<br /><img src='/captcha' /><form action='/captcha_submit'><input type='text' name='answer' /><input type='submit' value='Submit!' /></form>");
 });
 app.get('/captcha', function (req, res) {
     var captcha = svgCaptcha.create({'noise':4});
